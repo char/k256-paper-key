@@ -1,7 +1,7 @@
+import * as multibase from "@atcute/multibase";
 import * as secp from "@noble/secp256k1";
+import * as bip39 from "@scure/bip39";
 import { Buffer } from "node:buffer";
-import * as multibase from "npm:@atcute/multibase";
-import * as bip39 from "npm:@scure/bip39";
 import { BIP39_WORDS_EN } from "./bip39.ts";
 
 export const generateMnemonic = () =>
