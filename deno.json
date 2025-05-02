@@ -6,6 +6,7 @@
   },
   "imports": {
     "@atcute/multibase": "npm:@atcute/multibase@^1.1.3",
+    "@atcute/uint8array": "npm:@atcute/uint8array@^1.0.1",
     "@char/aftercare": "jsr:@char/aftercare@^0.4.2",
     "@noble/secp256k1": "npm:@noble/secp256k1@^2.2.3",
     "@scure/bip39": "npm:@scure/bip39@^1.6.0"
