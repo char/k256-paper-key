@@ -1,7 +1,8 @@
 {
   "tasks": {
     "build": "deno run -A ./_build.ts",
-    "watch": "deno run -A ./_build.ts --watch"
+    "watch": "deno run -A ./_build.ts --watch",
+    "deploy": "rsync -a ./web/ pds.bun.how:/srv/www/paper-k256.umm.gay/web/"
   },
   "imports": {
     "@atcute/multibase": "npm:@atcute/multibase@^1.1.3",
