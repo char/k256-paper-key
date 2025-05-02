@@ -1,0 +1,33 @@
+:root {
+  --color-bg: 25 25 26;
+  --color-bg-x: 39 31 51;
+  --color-fg: 255 255 255;
+  --color-off-accent: 255 255 255;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+main {
+  padding: 1lh;
+  max-width: 80ch;
+  margin: 0 auto;
+}
+
+textarea {
+  resize: none;
+}
+
+#generate-paper-key {
+  --color-accent: 32 32 36;
+  --color-accent-x: 50 50 58;
+  border-color: rgb(var(--color-fg) / 0.25);
+}
+
+#private-key:not(:focus) {
+  -webkit-text-security: disc;
+  letter-spacing: 0.2ch;
+}

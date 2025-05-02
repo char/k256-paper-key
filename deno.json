@@ -1,0 +1,15 @@
+{
+  "tasks": {
+    "build": "deno run -A ./_build.ts",
+    "watch": "deno run -A ./_build.ts --watch"
+  },
+  "imports": {
+    "@char/aftercare": "jsr:@char/aftercare@^0.4.2",
+    "@noble/secp256k1": "npm:@noble/secp256k1@^2.2.3"
+  },
+  "compilerOptions": {
+    "lib": ["deno.window", "dom"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "@char/aftercare"
+  }
+}
