@@ -3,6 +3,8 @@
   --color-bg-x: 39 31 51;
   --color-fg: 255 255 255;
   --color-off-accent: 255 255 255;
+
+  --alpha-text: 0.95;
 }
 
 form {
@@ -12,8 +14,9 @@ form {
 }
 
 main {
+  padding: 1em;
   padding: 1lh;
-  max-width: 80ch;
+  max-width: 60ch;
   margin: 0 auto;
 }
 
