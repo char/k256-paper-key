@@ -20,26 +20,26 @@ const wordCount = new Signal(0);
 const privKey = new Signal("");
 const didKey = new Signal("");
 
+const mnemonicInput = (
+  <textarea id="paper-key" rows={4} _tap={bindValue(mnemonic)} />
+) as HTMLTextAreaElement;
+
 mnemonic.subscribeImmediate((m) => {
   const words = m.split(/\s+/).filter((it) => BIP39_WORDS_EN.includes(it));
   wordCount.set(words.length);
-
-  const paperKeyElem = document.querySelector(
-    "form > #paper-key"
-  ) as HTMLTextAreaElement;
 
   try {
     const pk = words.pipe(mnemonicToBuffer);
     privKey.set(pk.pipe(secp.etc.bytesToHex));
     didKey.set(pk.pipe(privToPubKey).pipe(exportAsDidKey));
 
-    paperKeyElem?.setCustomValidity("");
+    mnemonicInput.setCustomValidity("");
   } catch (err) {
     privKey.set("");
     didKey.set("");
 
-    paperKeyElem?.setCustomValidity(String(err));
-    paperKeyElem?.reportValidity();
+    mnemonicInput.setCustomValidity(String(err));
+    mnemonicInput.reportValidity();
   }
 });
 
@@ -55,7 +55,7 @@ main.append(
     >
       generate
     </button>
-    <textarea id="paper-key" rows={4} _tap={bindValue(mnemonic)} />
+    {mnemonicInput}
 
     <label htmlFor="public-key">public key</label>
     <input id="public-key" type="text" readOnly _tap={bindValue(didKey)} />
