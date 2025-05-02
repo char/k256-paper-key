@@ -4,19 +4,22 @@ import * as bip39 from "@scure/bip39";
 import { Buffer } from "node:buffer";
 import { BIP39_WORDS_EN } from "./bip39.ts";
 
-export const generateMnemonic = () =>
-  Buffer.from(secp.etc.randomBytes(384 / 8))
-    .pipe((buf) => [buf.subarray(0, 32), buf.subarray(32)])
-    .map((b) => bip39.entropyToMnemonic(b, BIP39_WORDS_EN))
-    .join(" ");
+export const generateEntropy = (): Uint8Array => {
+  while (true) {
+    const bytes = secp.etc.randomBytes(256 / 8);
+    const num = secp.etc.bytesToNumberBE(bytes);
+    if (num !== 0n && num < secp.CURVE.n) {
+      return bytes;
+    }
+  }
+};
 
-export const mnemonicToBuffer = (words: string[]): Buffer =>
-  [words.slice(0, 24), words.slice(24, 36)]
-    .map((w) => w.join(" "))
-    .map((m) => bip39.mnemonicToEntropy(m, BIP39_WORDS_EN))
-    .pipe(Buffer.concat);
+export const bufferToMnemonic = (buf: Uint8Array): string =>
+  bip39.entropyToMnemonic(buf, BIP39_WORDS_EN);
 
-export const bufferToPrivKey = (buf: Buffer) => secp.etc.hashToPrivateKey(buf);
+export const mnemonicToBuffer = (words: string[]) =>
+  words.join(" ").pipe((m) => bip39.mnemonicToEntropy(m, BIP39_WORDS_EN));
+
 export const privToPubKey = (priv: secp.PrivKey) => secp.getPublicKey(priv);
 export const exportAsDidKey = (pub: Uint8Array) => {
   const SECP256K1_PUBLIC_PREFIX = Uint8Array.from([0xe7, 0x01]);

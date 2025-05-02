@@ -4,9 +4,9 @@ import { Signal } from "@char/aftercare";
 import * as secp from "@noble/secp256k1";
 import { BIP39_WORDS_EN } from "./bip39.ts";
 import {
-  bufferToPrivKey,
+  bufferToMnemonic,
   exportAsDidKey,
-  generateMnemonic,
+  generateEntropy,
   mnemonicToBuffer,
   privToPubKey,
 } from "./mnemonic.ts";
@@ -14,7 +14,7 @@ import { bindText, bindValue } from "./util.ts";
 
 const main = document.querySelector("main")!;
 
-const mnemonic = new Signal(generateMnemonic());
+const mnemonic = new Signal(bufferToMnemonic(generateEntropy()));
 
 const wordCount = new Signal(0);
 const privKey = new Signal("");
@@ -29,7 +29,7 @@ mnemonic.subscribeImmediate((m) => {
   ) as HTMLTextAreaElement;
 
   try {
-    const pk = words.pipe(mnemonicToBuffer).pipe(bufferToPrivKey);
+    const pk = words.pipe(mnemonicToBuffer);
     privKey.set(pk.pipe(secp.etc.bytesToHex));
     didKey.set(pk.pipe(privToPubKey).pipe(exportAsDidKey));
 
@@ -46,12 +46,12 @@ mnemonic.subscribeImmediate((m) => {
 main.append(
   <form>
     <label htmlFor="paper-key">
-      paper key (<data _tap={bindText(wordCount)} /> / 36)
+      paper key (<data _tap={bindText(wordCount)} /> / 24)
     </label>
     <button
       id="generate-paper-key"
       type="button"
-      _onclick={() => mnemonic.set(generateMnemonic())}
+      _onclick={() => mnemonic.set(bufferToMnemonic(generateEntropy()))}
     >
       generate
     </button>
